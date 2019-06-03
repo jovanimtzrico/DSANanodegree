@@ -32,12 +32,12 @@ def tower_of_Hanoi(num_disks):
     TowerOfHanoi(num_disks, 'S', 'A', 'D')
     pass
 
-def TowerOfHanoi(n , from_rod, aux_rod, to_rod): 
+def TowerOfHanoi(n , source, auxiliary, destination): 
     if n > 0:
-#         print("TowerOfHanoi ",n , from_rod, aux_rod, to_rod, sep = ' ')
-        TowerOfHanoi(n-1, from_rod, to_rod, aux_rod) 
-        print("Move disk",n,"from rod",from_rod,"to rod",to_rod )
-        TowerOfHanoi(n-1, aux_rod, from_rod, to_rod)
+#         print("TowerOfHanoi ",n , source, auxiliary, destination, sep = ' ')
+        TowerOfHanoi(n-1, source, destination, auxiliary) 
+        print("Move disk {} from rod {} to rod {}".format(n,source,destination))
+        TowerOfHanoi(n-1, auxiliary, source, destination)
 
 tower_of_Hanoi(3)
 
