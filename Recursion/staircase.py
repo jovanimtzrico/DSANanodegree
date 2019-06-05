@@ -36,9 +36,9 @@ def staircase(n):
     if n <= 1:
         return 1
     steps = 0
-    for i in range(3):
-        if n-i-1 >= 0:
-            steps += staircase(n-i-1)
+    for i in [1,2,3]:
+        if n-i >= 0:
+            steps += staircase(n-i)
     return steps
 
 
