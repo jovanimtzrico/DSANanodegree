@@ -89,7 +89,7 @@ class Tree():
             return -1
         else:
             return 1
-    
+
     """
     define insert here
     can use a for loop (try one or both ways)
@@ -150,9 +150,38 @@ class Tree():
             self.root = new_node 
             return
         self.insert_recursion(node, value)
-
-
-
+    
+    def insert(self,new_value):
+        new_node = Node(new_value)
+        node = self.get_root()
+        if node == None:
+            self.root = new_node
+            return
+        
+        while(True):
+            comparison = self.compare(node, new_node)
+            if comparison == 0:
+                # override with new node
+                node = new_node
+                break # override node, and stop looping
+            elif comparison == -1:
+                # go left
+                if node.has_left_child():
+                    node = node.get_left_child()
+                else:
+                    node.set_left_child(new_node)
+                    break #inserted node, so stop looping
+            else: #comparison == 1
+                # go right
+                if node.has_right_child():
+                    node = node.get_right_child()
+                else:
+                    node.set_right_child(new_node)
+                    break # inserted node, so stop looping
+                    
+    """
+    implement search
+    """
     def search(self,value):
         node = self.get_root()
         if node == None:
@@ -172,28 +201,40 @@ class Tree():
                     node = node.get_right_child()
                 else:
                     return False
+    
+    def minValueNode(self,node): 
+        current = node 
+        # loop down to find the leftmost leaf 
+        while(current.left is not None): 
+            current = current.left  
+        return current
+
 
     def delete(self, value):
-	    return self.delete_node(self.get_root(), value)
-
+        return self.delete_node(self.get_root(), value)
 
     def delete_node(self,node,value):
-	    if not node:
-	        return node
-	    elif value < node.value:
-	        node.left = self.delete_node(node.left,value)
-	    elif value > node.value:
-	        node.right = self.delete_node(node.right,value)
-	    else:
-	        if node.right == None:
-	            return node.left
-	        else:
-	            tmpNode = self.getMinValueNode(node.right)
-	            node.value = tmpNode.value
-	            node.right = self.delete_node(node.right,tmpNode.value)
-	    return node
-     
-                    
+        print(node)
+        if not node:
+            return node
+        if value < node.get_value():
+            print("Value less ",value, node.get_value())
+            node.set_left_child(self.delete_node(node.get_left_child(), value))
+        elif value > node.get_value():
+            print("Value greater ",value, node.get_value())
+            node.set_right_child(self.delete_node(node.get_right_child(), value))
+        else:
+            print("Value equal ",value, node.get_value())
+            if node.get_right_child() is None:
+                return node.get_left_child();
+            else:
+                temp_node = self.minValueNode(node.get_right_child())
+                print("Temp ", temp_node)
+                node.set_value(temp_node.get_value())
+                node.set_right_child(self.delete_node(node.get_right_child(), temp_node.get_value()))
+        return node
+        
+            
     def __repr__(self):
         level = 0
         q = Queue()
@@ -263,7 +304,25 @@ print(tree)
 
 
 #Test 4
-print(tree.delete(4))
+tree = Tree()
+tree.insert(5)
+tree.insert(3)
+tree.insert(2)
+tree.insert(4)
+tree.insert(7)
+tree.insert(6)
+tree.insert(9)
+tree.insert(8)
+tree.insert(10)
+
+
+print(f"""
+search for 8: {tree.search(8)}
+search for 2: {tree.search(2)}
+""")
+print(tree)
+
+print("\n Deleting ")
 print(tree)
 
 
