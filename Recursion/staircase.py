@@ -15,7 +15,6 @@
 def staircase(n):
     if n <= 0:
         return 1
-    
     if n == 1:
         return 1
     elif n == 2:
@@ -39,6 +38,34 @@ def staircase(n):
     for i in [1,2,3]:
         if n-i >= 0:
             steps += staircase(n-i)
+    return steps
+
+def staircase(n):
+    # Base Case - minimum steps possible and number of ways the child can climb them
+    if n < 0:
+        return 0
+    if n == 0:
+        return 1
+    # Inductive Hypothesis - ways to climb rest of the steps
+    return staircase(n-1) + staircase(n-2) + staircase(n-3)        
+
+def staircase(n):
+    if n == 0:
+        return 1
+    steps = 0
+    for i in [1,2,3]:
+        if n-i >= 0:
+            steps += staircase(n-i)
+    return steps
+
+def staircase(n,num_steps = [1,2,3]):
+    if n < 0:
+        return 0
+    if n == 0:
+        return 1
+    steps = 0
+    for i in num_steps:
+        steps += staircase(n-i)
     return steps
 
 
